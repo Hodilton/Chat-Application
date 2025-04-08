@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Android_app</string>
+
+    <string name="activity_auth_email">Email</string>
+    <string name="activity_auth_password">Password</string>
+    <string name="activity_auth_sign_up">Sign up</string>
+
+    <string name="activity_register_login">Login</string>
+    <string name="activity_register_new_to_here">New to here?</string>
+    <string name="activity_login_username">Username</string>
 </resources>

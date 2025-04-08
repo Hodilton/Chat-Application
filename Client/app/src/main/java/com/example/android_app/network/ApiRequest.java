@@ -59,11 +59,11 @@ public abstract class ApiRequest {
 
                 if (context instanceof AppCompatActivity) {
                     ((AppCompatActivity) context).runOnUiThread(() -> {
-                        if (success) {
-                            Toast.makeText(context, "Запрос выполнен успешно", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(context, "Ошибка выполнения запроса", Toast.LENGTH_SHORT).show();
-                        }
+//                        if (success) {
+//                            Toast.makeText(context, "Запрос выполнен успешно", Toast.LENGTH_SHORT).show();
+//                        } else {
+//                            Toast.makeText(context, "Ошибка выполнения запроса", Toast.LENGTH_SHORT).show();
+//                        }
                     });
                 }
                 callback.onResponse(success, responseBody);

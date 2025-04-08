@@ -10,11 +10,10 @@ import java.security.NoSuchAlgorithmException;
 public class AuthRequests extends ApiRequest {
     private static final String TAG = "AuthRequests";
 
-    public static void login(Context context, String username, String email, String password, ResponseCallback callback) {
+    public static void login(Context context, String email, String password, ResponseCallback callback) {
         String url = ServerConfig.BASE_URL + "/login";
         try {
             JSONObject json = new JSONObject();
-            json.put("username", username);
             json.put("email", email);
             json.put("password", hashPassword(password));
 
