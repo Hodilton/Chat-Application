@@ -20,7 +20,7 @@ public class AuthRequests extends ApiRequest {
             sendRequest(context, url, json.toString(), "POST", callback);
         } catch (Exception e) {
             Log.e(TAG, "Login error", e);
-            callback.onResponse(false, null);
+            callback.onResponse(false, "Login request creation failed.", null);
         }
     }
 
@@ -35,7 +35,7 @@ public class AuthRequests extends ApiRequest {
             sendRequest(context, url, json.toString(), "POST", callback);
         } catch (Exception e) {
             Log.e(TAG, "Register error", e);
-            callback.onResponse(false, null);
+            callback.onResponse(false, "Registration request creation failed.", null);
         }
     }
 

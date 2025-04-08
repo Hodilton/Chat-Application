@@ -16,7 +16,8 @@
         android:src="@drawable/image1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription,ImageContrastCheck" />
 
     <TextView
         android:id="@+id/login_title"
@@ -45,7 +46,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/email_icon"
-            android:layout_gravity="center_vertical" />
+            android:layout_gravity="center_vertical"
+            tools:ignore="ContentDescription" />
 
         <EditText
             android:id="@+id/email_et"
@@ -54,7 +56,7 @@
             android:layout_marginStart="9dp"
             android:hint="@string/activity_auth_email"
             android:textColor="@color/black"
-            tools:ignore="TouchTargetSizeCheck" />
+            tools:ignore="Autofill,TextContrastCheck,TextFields,TouchTargetSizeCheck" />
 
     </LinearLayout>
 
@@ -75,7 +77,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/password_icon"
             android:layout_gravity="center_vertical"
-            />
+            tools:ignore="ContentDescription" />
 
         <EditText
             android:id="@+id/password_et"
@@ -85,7 +87,7 @@
             android:hint="@string/activity_auth_password"
             android:inputType="textPassword"
             android:textColor="@color/black"
-            tools:ignore="TouchTargetSizeCheck" />
+            tools:ignore="Autofill,TextContrastCheck,TouchTargetSizeCheck" />
 
     </LinearLayout>
 
@@ -93,13 +95,14 @@
         android:id="@+id/login_btn"
         android:layout_width="268dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/blue"
-        android:textColor="@color/black"
         android:layout_marginTop="50dp"
+        android:backgroundTint="@color/blue"
         android:text="@string/activity_register_login"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password_lin" />
+        app:layout_constraintTop_toBottomOf="@+id/password_lin"
+        tools:ignore="DuplicateSpeakableTextCheck,TextContrastCheck" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -123,5 +126,15 @@
             android:text="@string/activity_auth_sign_up"
             android:layout_marginStart="7dp"/>
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/login_btn"
+        app:layout_constraintEnd_toEndOf="@id/login_btn"
+        app:layout_constraintStart_toStartOf="@id/login_btn"
+        app:layout_constraintTop_toTopOf="@id/login_btn"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

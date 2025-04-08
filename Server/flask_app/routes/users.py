@@ -7,6 +7,36 @@ def init_users_routes(db):
     global db_global
     db_global = db
 
+
+@users_bp.route('/login', methods=['POST'])
+def login():
+    try:
+        data = request.get_json()
+        required = ['email', 'password']
+        if not all(key in data for key in required):
+            return jsonify({"error": "Missing email or password."}), 400
+
+        email = data['email']
+        password = data['password']
+
+        user = db_global.tables.users.fetch("by_email", "one", (email,))
+
+        if not user:
+            return jsonify({"error": "Invalid email."}), 401
+
+        if password != user[3]:
+            return jsonify({"error": "Invalid email or password"}), 401
+
+        return jsonify({
+            "id": user[0],
+            "username": user[1],
+            "email": user[2],
+            "created_at": user[4]
+        }), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 @users_bp.route('/register', methods=['POST'])
 def register():
     try:

@@ -6,6 +6,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import okhttp3.*;
 
 import java.io.IOException;
@@ -16,7 +20,7 @@ public abstract class ApiRequest {
     private static final OkHttpClient client = new OkHttpClient();
 
     public interface ResponseCallback {
-        void onResponse(boolean success, String response);
+        void onResponse(boolean success, String message, String response);
     }
 
     protected static void sendRequest(Context context, String url, String json, String method, ResponseCallback callback) {
@@ -43,31 +47,60 @@ public abstract class ApiRequest {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                if (context instanceof AppCompatActivity) {
-                    ((AppCompatActivity) context).runOnUiThread(() ->
-                            Toast.makeText(context, "Ошибка соединения", Toast.LENGTH_SHORT).show()
-                    );
-                }
-                Log.e(TAG, "Request failed", e);
-                callback.onResponse(false, null);
+                handleError(context, "Connection error: " + e.getMessage(), callback);
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                boolean success = response.isSuccessful();
                 String responseBody = response.body() != null ? response.body().string() : "";
-
-                if (context instanceof AppCompatActivity) {
-                    ((AppCompatActivity) context).runOnUiThread(() -> {
-//                        if (success) {
-//                            Toast.makeText(context, "Запрос выполнен успешно", Toast.LENGTH_SHORT).show();
-//                        } else {
-//                            Toast.makeText(context, "Ошибка выполнения запроса", Toast.LENGTH_SHORT).show();
-//                        }
-                    });
+                if (response.isSuccessful()) {
+                    handleSuccess(context, responseBody, callback);
+                } else {
+                    parseErrorResponse(context, responseBody, callback);
                 }
-                callback.onResponse(success, responseBody);
             }
         });
+    }
+
+    private static void handleSuccess(Context context, String responseBody, ResponseCallback callback) {
+        String message = "Operation successful";
+        try {
+            JSONObject json = new JSONObject(responseBody);
+            if (json.has("message")) {
+                message = json.getString("message");
+            }
+        } catch (JSONException e) {
+            Log.e(TAG, "Error parsing success response", e);
+        }
+        showToast(context, message, false);
+        callback.onResponse(true, message, responseBody);
+    }
+
+    private static void parseErrorResponse(Context context, String responseBody, ResponseCallback callback) {
+        String errorMessage = "Request failed";
+        try {
+            JSONObject json = new JSONObject(responseBody);
+            if (json.has("error")) {
+                errorMessage = json.getString("error");
+            } else if (json.has("message")) {
+                errorMessage = json.getString("message");
+            }
+        } catch (JSONException e) {
+            Log.e(TAG, "Error parsing error response", e);
+        }
+        handleError(context, errorMessage, callback);
+    }
+
+    private static void handleError(Context context, String message, ResponseCallback callback) {
+        showToast(context, message, true);
+        callback.onResponse(false, message, null);
+    }
+
+    private static void showToast(Context context, String message, boolean isError) {
+        if (context instanceof AppCompatActivity) {
+            ((AppCompatActivity) context).runOnUiThread(() -> {
+                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+            });
+        }
     }
 }
