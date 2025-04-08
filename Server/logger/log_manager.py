@@ -35,6 +35,11 @@ class LogManager:
             open(cls._loggers[log_name].file_path, 'w').close()
 
     @classmethod
+    def clear_log_for_all(cls):
+        for log_name in cls._loggers:
+            cls.clear_log(log_name)
+
+    @classmethod
     def log_program_start_for_all(cls):
         for log_name in cls._loggers:
             cls.log_program_start(log_name)
