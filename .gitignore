@@ -164,3 +164,26 @@ cython_debug/
 **/venv/
 **/env/
 #*.log
+
+**/app/src/androidTest
+**/app/src/main/res/drawable/*.xml
+**/app/src/main/res/mipmap-anydpi
+**/app/src/main/res/mipmap-hdpi
+**/app/src/main/res/mipmap-mdpi
+**/app/src/main/res/mipmap-xhdpi
+**/app/src/main/res/mipmap-xxhdpi
+**/app/src/main/res/mipmap-xxxhdpi
+**/app/src/main/res/values-night
+**/app/src/main/res/xml
+**/app/src/test/java/com/example
+**/app/proguard-rules.pro
+**/gradle/wrapper
+
+gradlew
+gradlew.bat
+# build.gradle
+gradle.properties
+settings.gradle
+
+**/*.gitignore
+
