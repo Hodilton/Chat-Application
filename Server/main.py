@@ -3,6 +3,7 @@ from database.utils.utilities import Messages as MessagesDB
 from logger.log_manager import LogManager
 
 from database.src.database import Database
+from flask_app.app import app, init_db
 
 def main():
     log_config = {
@@ -17,9 +18,12 @@ def main():
     LogManager.clear_log_for_all()
     LogManager.log_program_start_for_all()
 
-    db = Database("./database/data")
+    db = Database("data")
     db.connect()
     db.reset()
+
+    init_db(db)
+    app.run(host='0.0.0.0', port=8000)
 
     db.close()
     LogManager.log_program_end_for_all()
