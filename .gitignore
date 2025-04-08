@@ -176,7 +176,7 @@ cython_debug/
 **/app/src/main/res/values-night
 **/app/src/main/res/xml
 **/app/src/test/java/com/example
-**/app/src/main/java/com/example/android_app/network/ServerConfig.java
+**/app/**/ServerConfig.java
 **/app/proguard-rules.pro
 **/gradle/wrapper
 
@@ -187,4 +187,3 @@ gradle.properties
 settings.gradle
 
 **/*.gitignore
-
