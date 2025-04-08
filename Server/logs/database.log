@@ -1,12 +1,12 @@
-[2025-04-08 16:17:00] 
-[2025-04-08 16:17:00] 🔸 Программа запущена
-[2025-04-08 16:17:00] ✅ Database config loaded successfully.
-[2025-04-08 16:17:00] ✅ Connection to database 'project-3' was successful.
-[2025-04-08 16:17:00] ✅ Tables config loaded successfully.
-[2025-04-08 16:17:00] ✅ Queries for table 'users' loaded successfully.
-[2025-04-08 16:17:00] ✅ Table 'users' initialized with queries successfully.
-[2025-04-08 16:17:00] ✅ Table 'users' dropped successfully.
-[2025-04-08 16:17:00] ✅ Table 'users' created successfully.
-[2025-04-08 16:39:24] ✅ Connection to database 'project-3' was successful close.
-[2025-04-08 16:39:24] 🔸 Программа завершена
-[2025-04-08 16:39:24] 
+[2025-04-08 16:42:30] 
+[2025-04-08 16:42:30] 🔸 Program start.
+[2025-04-08 16:42:30] ✅ Database config loaded successfully.
+[2025-04-08 16:42:30] ✅ Connection to database 'project-3' was successful.
+[2025-04-08 16:42:30] ✅ Tables config loaded successfully.
+[2025-04-08 16:42:30] ✅ Queries for table 'users' loaded successfully.
+[2025-04-08 16:42:30] ✅ Table 'users' initialized with queries successfully.
+[2025-04-08 16:42:30] ✅ Table 'users' dropped successfully.
+[2025-04-08 16:42:30] ✅ Table 'users' created successfully.
+[2025-04-08 16:42:39] ✅ Connection to database 'project-3' was successful close.
+[2025-04-08 16:42:39] 🔸 Program end.
+[2025-04-08 16:42:39] 

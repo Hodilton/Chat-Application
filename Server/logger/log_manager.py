@@ -27,7 +27,7 @@ class LogManager:
         if log_name in cls._loggers:
             cls._loggers[log_name].log(message)
         else:
-            print(f"❌ Лог '{log_name}' не найден!")
+            print(f"❌ Log '{log_name}' not found.!")
 
     @classmethod
     def clear_log(cls, log_name):
@@ -51,13 +51,13 @@ class LogManager:
 
     @classmethod
     def log_program_start(cls, log_name):
-        start_message = "🔸 Программа запущена"
+        start_message = "🔸 Program start."
         cls.add_blank_line(log_name)
         cls.log(log_name, start_message)
 
     @classmethod
     def log_program_end(cls, log_name):
-        end_message = "🔸 Программа завершена"
+        end_message = "🔸 Program end."
         cls.log(log_name, end_message)
         cls.add_blank_line(log_name)
 

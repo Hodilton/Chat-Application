@@ -1,7 +1,7 @@
-[2025-04-08 16:17:00] 
-[2025-04-08 16:17:00] 🔸 Программа запущена
-[2025-04-08 16:17:00] ✅ Data '.\data\db_config.json' read successfully.
-[2025-04-08 16:17:00] ✅ Data '.\data\tables_config.json' read successfully.
-[2025-04-08 16:17:00] ✅ Data '.\data/queries\users.json' read successfully.
-[2025-04-08 16:39:24] 🔸 Программа завершена
-[2025-04-08 16:39:24] 
+[2025-04-08 16:42:30] 
+[2025-04-08 16:42:30] 🔸 Program start.
+[2025-04-08 16:42:30] ✅ Data '.\data\db_config.json' read successfully.
+[2025-04-08 16:42:30] ✅ Data '.\data\tables_config.json' read successfully.
+[2025-04-08 16:42:30] ✅ Data '.\data/queries\users.json' read successfully.
+[2025-04-08 16:42:39] 🔸 Program end.
+[2025-04-08 16:42:39] 
