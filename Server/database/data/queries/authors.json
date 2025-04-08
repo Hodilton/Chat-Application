@@ -1,0 +1,17 @@
+{
+    "create": "CREATE TABLE IF NOT EXISTS authors (id INT AUTO_INCREMENT PRIMARY KEY, LastName VARCHAR(255) NOT NULL, MiddleName VARCHAR(255), SecondName VARCHAR(255));",
+    "drop": "DROP TABLE IF EXISTS authors;",
+
+    "insert": "INSERT INTO authors (LastName, MiddleName, SecondName) VALUES (%s, %s, %s);",
+    "delete": "DELETE FROM authors WHERE id = %s;",
+    "update": "UPDATE authors SET LastName = %s, MiddleName = %s, SecondName = %s WHERE id = %s;",
+
+    "fetch": {
+        "by_id" : "SELECT * FROM authors WHERE id = %s;",
+        "by_full_name": "SELECT * FROM authors WHERE LastName = %s AND MiddleName = %s AND SecondName = %s;",
+        "id_by_full_name": "SELECT id FROM authors WHERE LastName = %s AND MiddleName = %s AND SecondName = %s;",
+        "by_partial_name": "SELECT * FROM authors WHERE LastName LIKE %s OR MiddleName LIKE %s OR SecondName LIKE %s;",
+        "all" : "SELECT * FROM authors;",
+        "count": "SELECT COUNT(*) FROM authors;"
+    }
+}
