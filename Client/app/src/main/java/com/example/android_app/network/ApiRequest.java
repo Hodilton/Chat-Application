@@ -7,15 +7,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import okhttp3.*;
-import org.json.JSONObject;
+
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
-public class NetworkManager {
-
-    private static final String TAG = "NetworkManager";
+public abstract class ApiRequest {
+    private static final String TAG = "ApiRequest";
     private static final MediaType JSON_MEDIA_TYPE = MediaType.parse("application/json; charset=utf-8");
     private static final OkHttpClient client = new OkHttpClient();
 
@@ -23,26 +19,7 @@ public class NetworkManager {
         void onResponse(boolean success, String response);
     }
 
-    private static String sha256(String input) {
-        try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hash = digest.digest(input.getBytes(StandardCharsets.UTF_8));
-            StringBuilder hexString = new StringBuilder();
-
-            for (byte b : hash) {
-                String hex = Integer.toHexString(0xff & b);
-                if (hex.length() == 1) hexString.append('0');
-                hexString.append(hex);
-            }
-
-            return hexString.toString();
-        } catch (NoSuchAlgorithmException e) {
-            Log.e(TAG, "SHA-256 algorithm not found.", e);
-            return null;
-        }
-    }
-
-    private static void sendRequest(Context context, String url, String json, String method, ResponseCallback callback) {
+    protected static void sendRequest(Context context, String url, String json, String method, ResponseCallback callback) {
         RequestBody body = json != null ? RequestBody.create(json, JSON_MEDIA_TYPE) : null;
         Request.Builder requestBuilder = new Request.Builder().url(url);
 
@@ -71,6 +48,7 @@ public class NetworkManager {
                             Toast.makeText(context, "Ошибка соединения", Toast.LENGTH_SHORT).show()
                     );
                 }
+                Log.e(TAG, "Request failed", e);
                 callback.onResponse(false, null);
             }
 
@@ -91,26 +69,5 @@ public class NetworkManager {
                 callback.onResponse(success, responseBody);
             }
         });
-    }
-
-    public static void sendLoginRequest(Context context, String username, String email, String password, ResponseCallback callback) {
-        String url = ServerConfig.BASE_URL + "/login";
-        try {
-            String hashedPassword = sha256(password);
-            if (hashedPassword == null) {
-                callback.onResponse(false, "Password hashing failed.");
-                return;
-            }
-
-            JSONObject json = new JSONObject();
-            json.put("username", username);
-            json.put("email", email);
-            json.put("password", hashedPassword);
-
-            sendRequest(context, url, json.toString(), "POST", callback);
-        } catch (Exception e) {
-            Log.e(TAG, "Error creating login JSON", e);
-            callback.onResponse(false, null);
-        }
     }
 }
