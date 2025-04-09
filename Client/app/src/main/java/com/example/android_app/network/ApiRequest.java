@@ -1,11 +1,12 @@
 package com.example.android_app.network;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,7 +16,7 @@ import okhttp3.*;
 import java.io.IOException;
 
 public abstract class ApiRequest {
-    private static final String TAG = "ApiRequest";
+    private static final String TAG = ApiRequest.class.getSimpleName();
     private static final MediaType JSON_MEDIA_TYPE = MediaType.parse("application/json; charset=utf-8");
     private static final OkHttpClient client = new OkHttpClient();
 
@@ -24,25 +25,8 @@ public abstract class ApiRequest {
     }
 
     protected static void sendRequest(Context context, String url, String json, String method, ResponseCallback callback) {
-        RequestBody body = json != null ? RequestBody.create(json, JSON_MEDIA_TYPE) : null;
-        Request.Builder requestBuilder = new Request.Builder().url(url);
-
-        switch (method.toUpperCase()) {
-            case "POST":
-                if (body != null) requestBuilder.post(body);
-                break;
-            case "PUT":
-                if (body != null) requestBuilder.put(body);
-                break;
-            case "DELETE":
-                requestBuilder.delete();
-                break;
-            default:
-                requestBuilder.get();
-                break;
-        }
-
-        Request request = requestBuilder.build();
+        RequestBody body = createRequestBody(json);
+        Request request = buildRequest(url, method, body);
 
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -62,6 +46,25 @@ public abstract class ApiRequest {
         });
     }
 
+    private static RequestBody createRequestBody(String json) {
+        return json != null ? RequestBody.create(json, JSON_MEDIA_TYPE) : null;
+    }
+
+    private static Request buildRequest(String url, String method, RequestBody body) {
+        Request.Builder builder = new Request.Builder().url(url);
+
+        switch (method.toUpperCase()) {
+            case "POST":
+                return body != null ? builder.post(body).build() : builder.build();
+            case "PUT":
+                return body != null ? builder.put(body).build() : builder.build();
+            case "DELETE":
+                return builder.delete().build();
+            default:
+                return builder.get().build();
+        }
+    }
+
     private static void handleSuccess(Context context, String responseBody, ResponseCallback callback) {
         String message = "Operation successful";
         try {
@@ -72,7 +75,7 @@ public abstract class ApiRequest {
         } catch (JSONException e) {
             Log.e(TAG, "Error parsing success response", e);
         }
-        showToast(context, message, false);
+        showToast(context, message);
         callback.onResponse(true, message, responseBody);
     }
 
@@ -88,19 +91,14 @@ public abstract class ApiRequest {
         } catch (JSONException e) {
             Log.e(TAG, "Error parsing error response", e);
         }
-        handleError(context, errorMessage, callback);
+        handleError(context,errorMessage, callback);
     }
 
     private static void handleError(Context context, String message, ResponseCallback callback) {
-//        showToast(context, message, true);
         callback.onResponse(false, message, null);
     }
 
-    private static void showToast(Context context, String message, boolean isError) {
-        if (context instanceof AppCompatActivity) {
-            ((AppCompatActivity) context).runOnUiThread(() -> {
-                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-            });
-        }
+    private static void showToast(Context context, String message) {
+        new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(context.getApplicationContext(), message, Toast.LENGTH_LONG).show());
     }
 }
