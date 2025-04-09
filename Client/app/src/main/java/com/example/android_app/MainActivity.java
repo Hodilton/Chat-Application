@@ -1,10 +1,10 @@
 package com.example.android_app;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.android_app.bottom_nav.chats.ChatsFragment;
 import com.example.android_app.bottom_nav.new_chats.NewChatFragment;
@@ -15,7 +15,6 @@ import com.example.android_app.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
     private static final int DEFAULT_FRAGMENT_ID = R.id.chats;
     private ActivityMainBinding binding;
-    private UserViewModel userViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +28,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupViewModel() {
-        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
-    }
-
-    public UserViewModel getUserViewModel() {
-        return userViewModel;
+        UserViewModel.getInstance().getCurrentUser().observe(this, user -> {
+            if (user == null) {
+                startActivity(new Intent(this, LoginActivity.class));
+                finish();
+            }
+        });
     }
 
     private void setupFragments() {

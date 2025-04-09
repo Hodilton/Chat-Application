@@ -2,12 +2,8 @@ package com.example.android_app;
 
 import android.content.Intent;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import com.example.android_app.databinding.ActivityLoginBinding;
-import com.example.android_app.models.User;
 import com.example.android_app.network.AuthRequests;
-import com.example.android_app.network.UserRequests;
 import com.example.android_app.view_models.UserViewModel;
 
 public class LoginActivity extends AuthBaseActivity {
@@ -38,28 +34,22 @@ public class LoginActivity extends AuthBaseActivity {
         String email = binding.emailEt.getText().toString().trim();
         String password = binding.passwordEt.getText().toString().trim();
 
-        if (!validateEmail(email) ||
-                !validatePassword(password)) {
+        if (!validateEmail(email) || !validatePassword(password)) {
             return;
         }
 
         setLoadingState(true);
 
         AuthRequests.login(this, email, password,
-                (success, message, response) -> runOnUiThread(() -> {
+                (success, message, user) -> {
                     setLoadingState(false);
-                    if (success) {
-                        User user = UserRequests.parseUser(response);
-                        if(user !=null) {
-                            UserViewModel userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
-                            userViewModel.setCurrentUser(user);
-
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                            finishAffinity();
-                        }
+                    if (success && user != null) {
+                        UserViewModel.getInstance().setCurrentUser(user);
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        finishAffinity();
                     } else {
                         handleAuthError(message);
                     }
-                }));
+                });
     }
 }

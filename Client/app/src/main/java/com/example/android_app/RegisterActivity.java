@@ -42,7 +42,7 @@ public class RegisterActivity extends AuthBaseActivity {
         setLoadingState(true);
 
         AuthRequests.register(this, username, email, password,
-                (success, message, response) -> runOnUiThread(() -> {
+                (success, message, user) -> runOnUiThread(() -> {
                     setLoadingState(false);
                     if (success) {
                         finish();
