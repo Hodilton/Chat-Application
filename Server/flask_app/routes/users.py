@@ -25,7 +25,7 @@ def login():
             return jsonify({"error": "Invalid email."}), 401
 
         if password != user[3]:
-            return jsonify({"error": "Invalid email or password"}), 401
+            return jsonify({"error": "Invalid password"}), 401
 
         return jsonify({
             "id": user[0],
