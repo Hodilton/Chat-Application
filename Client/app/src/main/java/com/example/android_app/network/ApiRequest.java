@@ -92,7 +92,7 @@ public abstract class ApiRequest {
     }
 
     private static void handleError(Context context, String message, ResponseCallback callback) {
-        showToast(context, message, true);
+//        showToast(context, message, true);
         callback.onResponse(false, message, null);
     }
 

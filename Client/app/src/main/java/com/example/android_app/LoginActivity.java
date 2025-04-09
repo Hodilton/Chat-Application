@@ -1,6 +1,7 @@
 package com.example.android_app;
 
 import android.content.Intent;
+
 import com.example.android_app.databinding.ActivityLoginBinding;
 import com.example.android_app.network.AuthRequests;
 
@@ -8,9 +9,9 @@ public class LoginActivity extends AuthBaseActivity {
     private ActivityLoginBinding binding;
 
     @Override
-    protected int getLayoutResource() {
+    protected void getLayoutResource() {
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
-        return binding.getRoot().getId();
+        setContentView(binding.getRoot());
     }
 
     @Override
@@ -46,7 +47,8 @@ public class LoginActivity extends AuthBaseActivity {
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         finishAffinity();
                     } else {
-                        passwordEt.setError(message);
+                        handleAuthError(message);
+//                        passwordEt.setError(message);
                     }
                 }));
     }

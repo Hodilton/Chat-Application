@@ -5,6 +5,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public abstract class AuthBaseActivity extends AppCompatActivity {
@@ -16,12 +18,13 @@ public abstract class AuthBaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(getLayoutResource());
+//        setContentView(getLayoutResource());
+        getLayoutResource();
         initViews();
         setupListeners();
     }
 
-    protected abstract int getLayoutResource();
+    protected abstract void getLayoutResource();
     protected abstract void initViews();
     protected abstract void setupListeners();
     protected abstract void performAuthAction();
@@ -62,5 +65,28 @@ public abstract class AuthBaseActivity extends AppCompatActivity {
             return false;
         }
         return true;
+    }
+
+    protected void handleAuthError(String message) {
+        runOnUiThread(() -> {
+            if (emailEt != null) emailEt.setError(null);
+            if (passwordEt != null) passwordEt.setError(null);
+            if (usernameEt != null) usernameEt.setError(null);
+
+            String lowerMsg = message.toLowerCase();
+
+            if (lowerMsg.contains("парол") || lowerMsg.contains("password")) {
+                if (passwordEt != null) passwordEt.setError(message);
+            }
+            else if (lowerMsg.contains("почт") || lowerMsg.contains("email")) {
+                if (emailEt != null) emailEt.setError(message);
+            }
+            else if ((lowerMsg.contains("имя") || lowerMsg.contains("username")) && usernameEt != null) {
+                usernameEt.setError(message);
+            }
+            else {
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

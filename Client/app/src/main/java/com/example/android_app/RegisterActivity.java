@@ -7,9 +7,9 @@ public class RegisterActivity extends AuthBaseActivity {
     private ActivityRegisterBinding binding;
 
     @Override
-    protected int getLayoutResource() {
+    protected void getLayoutResource() {
         binding = ActivityRegisterBinding.inflate(getLayoutInflater());
-        return binding.getRoot().getId();
+        setContentView(binding.getRoot());
     }
 
     @Override
@@ -47,7 +47,8 @@ public class RegisterActivity extends AuthBaseActivity {
                     if (success) {
                         finish();
                     } else {
-                        passwordEt.setError(message);
+                        handleAuthError(message);
+//                        passwordEt.setError(message);
                     }
                 }));
     }
