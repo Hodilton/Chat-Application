@@ -4,15 +4,18 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.android_app.bottom_nav.chats.ChatsFragment;
 import com.example.android_app.bottom_nav.new_chats.NewChatFragment;
 import com.example.android_app.bottom_nav.profile.ProfileFragment;
+import com.example.android_app.view_models.UserViewModel;
 import com.example.android_app.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
-    private ActivityMainBinding binding;
     private static final int DEFAULT_FRAGMENT_ID = R.id.chats;
+    private ActivityMainBinding binding;
+    private UserViewModel userViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,8 +23,17 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        setupViewModel();
         setupFragments();
         setupBottomNavigation();
+    }
+
+    private void setupViewModel() {
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+    }
+
+    public UserViewModel getUserViewModel() {
+        return userViewModel;
     }
 
     private void setupFragments() {

@@ -2,8 +2,13 @@ package com.example.android_app;
 
 import android.content.Intent;
 
+import androidx.lifecycle.ViewModelProvider;
+
 import com.example.android_app.databinding.ActivityLoginBinding;
+import com.example.android_app.models.User;
 import com.example.android_app.network.AuthRequests;
+import com.example.android_app.network.UserRequests;
+import com.example.android_app.view_models.UserViewModel;
 
 public class LoginActivity extends AuthBaseActivity {
     private ActivityLoginBinding binding;
@@ -44,11 +49,16 @@ public class LoginActivity extends AuthBaseActivity {
                 (success, message, response) -> runOnUiThread(() -> {
                     setLoadingState(false);
                     if (success) {
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                        finishAffinity();
+                        User user = UserRequests.parseUser(response);
+                        if(user !=null) {
+                            UserViewModel userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+                            userViewModel.setCurrentUser(user);
+
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            finishAffinity();
+                        }
                     } else {
                         handleAuthError(message);
-//                        passwordEt.setError(message);
                     }
                 }));
     }

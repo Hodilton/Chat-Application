@@ -48,7 +48,6 @@ public class RegisterActivity extends AuthBaseActivity {
                         finish();
                     } else {
                         handleAuthError(message);
-//                        passwordEt.setError(message);
                     }
                 }));
     }
