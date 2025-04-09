@@ -8,4 +8,7 @@
     <string name="activity_register_login">Login</string>
     <string name="activity_register_new_to_here">New to here?</string>
     <string name="activity_login_username">Username</string>
+    <string name="main_activity_nav_chats">Chats</string>
+    <string name="main_activity_nav_new_chat">New chat</string>
+    <string name="main_activity_nav_profile">Profile</string>
 </resources>

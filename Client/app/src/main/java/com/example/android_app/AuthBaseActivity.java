@@ -18,7 +18,6 @@ public abstract class AuthBaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(getLayoutResource());
         getLayoutResource();
         initViews();
         setupListeners();
