@@ -7,13 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import com.example.android_app.LoginActivity;
 import com.example.android_app.bottom_nav.BaseFragment;
 import com.example.android_app.databinding.FragmentProfileBinding;
 import com.example.android_app.models.User;
 
 public class ProfileFragment extends BaseFragment<FragmentProfileBinding> {
-
     @Override
     protected FragmentProfileBinding inflateBinding(LayoutInflater inflater, ViewGroup container) {
         return FragmentProfileBinding.inflate(inflater, container, false);
@@ -22,7 +22,6 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding> {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         setupListeners();
         observeData();
     }
