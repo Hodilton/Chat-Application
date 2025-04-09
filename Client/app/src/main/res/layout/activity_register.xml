@@ -137,7 +137,7 @@
         android:id="@+id/sign_up_btn"
         android:layout_width="268dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:backgroundTint="@color/blue"
         android:hint="@string/activity_auth_sign_up"
         android:textColor="@color/black"
@@ -151,9 +151,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/sign_up_btn"
-        app:layout_constraintEnd_toEndOf="@id/sign_up_btn"
-        app:layout_constraintStart_toStartOf="@id/sign_up_btn"
-        app:layout_constraintTop_toTopOf="@id/sign_up_btn"/>
+        app:layout_constraintTop_toBottomOf="@id/sign_up_btn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
