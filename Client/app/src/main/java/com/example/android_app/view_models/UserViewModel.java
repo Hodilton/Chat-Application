@@ -2,20 +2,25 @@ package com.example.android_app.view_models;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
-import com.example.android_app.models.User;
-import java.util.List;
 
-public class UserViewModel extends ViewModel {
+import com.example.android_app.models.User;
+
+public class UserViewModel {
+    private static UserViewModel instance;
     private final MutableLiveData<User> currentUser = new MutableLiveData<>();
-    private final MutableLiveData<List<User>> allUsers = new MutableLiveData<>();
+
+    private UserViewModel() {}
+    public static UserViewModel getInstance() {
+        if (instance == null) {
+            instance = new UserViewModel();
+        }
+        return instance;
+    }
 
     public LiveData<User> getCurrentUser() { return currentUser; }
-    public void setCurrentUser(User user) { currentUser.setValue(user); }
-    public LiveData<List<User>> getAllUsers() { return allUsers; }
-    public void setAllUsers(List<User> users) { allUsers.setValue(users); }
+    public void setCurrentUser(User user) { currentUser.postValue(user); }
 
     public void logout() {
-        currentUser.setValue(null);
+        currentUser.postValue(null);
     }
 }
