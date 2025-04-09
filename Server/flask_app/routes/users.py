@@ -31,7 +31,6 @@ def login():
             "id": user[0],
             "username": user[1],
             "email": user[2],
-            "created_at": user[4]
         }), 200
 
     except Exception as e:
@@ -74,7 +73,6 @@ def get_user(user_id):
                 "id": user[0],
                 "username": user[1],
                 "email": user[2],
-                "created_at": user[4]
             }), 200
         return jsonify({"error": "User not found"}), 404
     except Exception as e:
@@ -89,7 +87,6 @@ def get_all_users():
                 "id": u[0],
                 "username": u[1],
                 "email": u[2],
-                "created_at": u[4]
             } for u in users
         ]), 200
     except Exception as e:
