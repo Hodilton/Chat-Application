@@ -45,6 +45,14 @@ def register():
         if not all(key in data for key in required):
             return jsonify({"error": "Missing required fields"}), 400
 
+        existing_user = db_global.tables.users.fetch("by_username", "one", (data['username'],))
+        if existing_user:
+            return jsonify({"error": "Username already exists"}), 400
+
+        existing_email = db_global.tables.users.fetch("by_email", "one", (data['email'],))
+        if existing_email:
+            return jsonify({"error": "Email already registered"}), 400
+
         user_data = (
             data['username'],
             data['email'],
