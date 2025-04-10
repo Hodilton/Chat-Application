@@ -10,11 +10,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewbinding.ViewBinding;
 
+import com.example.android_app.R;
 import com.example.android_app.view_models.UserViewModel;
 
 public abstract class BaseFragment<B extends ViewBinding> extends Fragment {
     protected B binding;
     protected UserViewModel userViewModel;
+    private View progressBar;
 
     protected abstract B inflateBinding(LayoutInflater inflater, ViewGroup container);
 
@@ -24,13 +26,19 @@ public abstract class BaseFragment<B extends ViewBinding> extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = inflateBinding(inflater, container);
-        return binding.getRoot();
+        View root = binding.getRoot();
+        progressBar = root.findViewById(R.id.new_chat_pb);
+        return root;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         userViewModel = UserViewModel.getInstance();
+    }
+
+    protected void setLoadingState(boolean isLoading) {
+        progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
     }
 
     @Override
