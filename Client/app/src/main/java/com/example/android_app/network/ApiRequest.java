@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -24,7 +25,11 @@ public abstract class ApiRequest {
         void onResponse(boolean success, String message, String response);
     }
 
-    protected static void sendRequest(Context context, String url, String json, String method, ResponseCallback callback) {
+    protected static void sendRequest(Context context,
+                                      String url,
+                                      String json,
+                                      String method,
+                                      ResponseCallback callback) {
         RequestBody body = createRequestBody(json);
         Request request = buildRequest(url, method, body);
 
@@ -44,6 +49,14 @@ public abstract class ApiRequest {
                 }
             }
         });
+    }
+
+    protected static void runOnUiThread(Context context, Runnable action) {
+        if (context instanceof android.app.Activity) {
+            ((android.app.Activity) context).runOnUiThread(action);
+        } else {
+            action.run();
+        }
     }
 
     private static RequestBody createRequestBody(String json) {
@@ -68,9 +81,14 @@ public abstract class ApiRequest {
     private static void handleSuccess(Context context, String responseBody, ResponseCallback callback) {
         String message = "Operation successful";
         try {
-            JSONObject json = new JSONObject(responseBody);
-            if (json.has("message")) {
-                message = json.getString("message");
+            try {
+                JSONObject json = new JSONObject(responseBody);
+                if (json.has("message")) {
+                    message = json.getString("message");
+                }
+            } catch (JSONException e) {
+                JSONArray jsonArray = new JSONArray(responseBody);
+                message = "Received " + jsonArray.length() + " items";
             }
         } catch (JSONException e) {
             Log.e(TAG, "Error parsing success response", e);
