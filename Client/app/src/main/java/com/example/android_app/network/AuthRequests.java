@@ -3,8 +3,6 @@ package com.example.android_app.network;
 import android.content.Context;
 import android.util.Log;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.android_app.models.User;
 
 import org.json.JSONException;
@@ -27,16 +25,11 @@ public class AuthRequests extends ApiRequest {
         String url = ServerConfig.BASE_URL + "/login";
         try {
             JSONObject json = buildAuthJson(email, password, null);
-
             sendRequest(context, url, json.toString(), "POST",
-                    (success, message, response) -> {
-                        if (context instanceof AppCompatActivity) {
-                            ((AppCompatActivity) context).runOnUiThread(() -> {
-                                User user = success ? User.fromJson(response) : null;
-                                callback.onResponse(success, message, user);
-                            });
-                        }
-            });
+                    (success, message, response) -> runOnUiThread(context, () -> {
+                        User user = success ? User.fromJson(response) : null;
+                        callback.onResponse(success, message, user);
+                    }));
         } catch (Exception e) {
             Log.e(TAG, "Login error", e);
             callback.onResponse(false, "Login request creation failed.", null);
@@ -51,15 +44,22 @@ public class AuthRequests extends ApiRequest {
         String url = ServerConfig.BASE_URL + "/register";
         try {
             JSONObject json = buildAuthJson(email, password, username);
-
             sendRequest(context, url, json.toString(), "POST",
-                    (success, message, response) -> {
-                User user = success ? User.fromJson(response) : null;
-                callback.onResponse(success, message, user);
-            });
+                    (success, message, response) -> runOnUiThread(context, () -> {
+                        User user = success ? User.fromJson(response) : null;
+                        callback.onResponse(success, message, user);
+                    }));
         } catch (Exception e) {
             Log.e(TAG, "Register error", e);
             callback.onResponse(false, "Registration request creation failed.", null);
+        }
+    }
+
+    private static void runOnUiThread(Context context, Runnable action) {
+        if (context instanceof android.app.Activity) {
+            ((android.app.Activity) context).runOnUiThread(action);
+        } else {
+            action.run();
         }
     }
 
