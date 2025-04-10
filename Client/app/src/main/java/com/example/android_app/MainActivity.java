@@ -22,12 +22,12 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        setupViewModel();
+        observeData();
         setupFragments();
         setupBottomNavigation();
     }
 
-    private void setupViewModel() {
+    private void observeData() {
         UserViewModel.getInstance().getCurrentUser().observe(this, user -> {
             if (user == null) {
                 startActivity(new Intent(this, LoginActivity.class));
@@ -37,11 +37,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupFragments() {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(binding.fragmentContainer.getId(), new ChatsFragment())
-                .commit();
-
+        replaceFragment(new ChatsFragment());
         binding.bottomNav.setSelectedItemId(DEFAULT_FRAGMENT_ID);
     }
 
