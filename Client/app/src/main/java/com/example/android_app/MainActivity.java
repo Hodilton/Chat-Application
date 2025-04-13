@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.android_app.bottom_nav.chats.ChatsFragment;
-import com.example.android_app.bottom_nav.new_chats.NewChatFragment;
+import com.example.android_app.bottom_nav.users.UsersFragment;
 import com.example.android_app.bottom_nav.profile.ProfileFragment;
 import com.example.android_app.view_models.UserViewModel;
 import com.example.android_app.databinding.ActivityMainBinding;
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 replaceFragment(new ChatsFragment());
                 return true;
             } else if (itemId == R.id.new_chat) {
-                replaceFragment(new NewChatFragment());
+                replaceFragment(new UsersFragment());
                 return true;
             } else if (itemId == R.id.profile) {
                 replaceFragment(new ProfileFragment());
