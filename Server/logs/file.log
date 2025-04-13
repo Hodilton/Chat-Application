@@ -1,7 +1,8 @@
-[2025-04-10 01:27:42] 
-[2025-04-10 01:27:42] 🔸 Program start.
-[2025-04-10 01:27:42] ✅ Data '.\data\db_config.json' read successfully.
-[2025-04-10 01:27:43] ✅ Data '.\data\tables_config.json' read successfully.
-[2025-04-10 01:27:43] ✅ Data '.\data/queries\users.json' read successfully.
-[2025-04-10 02:57:20] 🔸 Program end.
-[2025-04-10 02:57:20] 
+[2025-04-13 23:05:31] 
+[2025-04-13 23:05:31] 🔸 Program start.
+[2025-04-13 23:05:31] ✅ Data '.\data\db_config.json' read successfully.
+[2025-04-13 23:05:31] ✅ Data '.\data\tables_config.json' read successfully.
+[2025-04-13 23:05:31] ✅ Data '.\data/queries\users.json' read successfully.
+[2025-04-13 23:05:31] ✅ Data '.\data/queries\chats.json' read successfully.
+[2025-04-13 23:05:31] 🔸 Program end.
+[2025-04-13 23:05:31] 
