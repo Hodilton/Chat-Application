@@ -40,6 +40,16 @@ public class User {
         return json;
     }
 
+    public JSONObject toJson()
+            throws JSONException {
+        JSONObject json = new JSONObject();
+        json.put("id", id);
+        json.put("email", email);
+        json.put("username", username);
+        if (username != null) json.put("username", username);
+        return json;
+    }
+
     public static User fromJson(JSONObject json) {
         try {
             return new User(
