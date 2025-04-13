@@ -14,18 +14,24 @@ def login():
         data = request.get_json()
         required = ['email', 'password']
         if not all(key in data for key in required):
-            return jsonify({"error": "Missing email or password."}), 400
+            return jsonify({
+                "error": "Missing email or password."
+            }), 400
 
-        email = data['email']
-        password = data['password']
+        email = str(data['email'])
+        password = str(data['password'])
 
         user = db_global.tables.users.fetch("by_email", "one", (email,))
 
         if not user:
-            return jsonify({"error": "Invalid email."}), 401
+            return jsonify({
+                "error": "Invalid email."
+            }), 401
 
         if password != user[3]:
-            return jsonify({"error": "Invalid password"}), 401
+            return jsonify({
+                "error": "Invalid password"
+            }), 401
 
         return jsonify({
             "id": user[0],
@@ -42,15 +48,24 @@ def register():
         data = request.get_json()
         required = ['username', 'email', 'password']
         if not all(key in data for key in required):
-            return jsonify({"error": "Missing required fields"}), 400
+            return jsonify({
+                "error": "Missing required user fields"
+            }), 400
 
-        existing_user = db_global.tables.users.fetch("by_username", "one", (data['username'],))
+        username = str(data['username'])
+        email = str(data['email'])
+
+        existing_user = db_global.tables.users.fetch("by_username", "one", (username,))
         if existing_user:
-            return jsonify({"error": "Username already exists"}), 400
+            return jsonify({
+                "error": "Username already exists"
+            }), 400
 
-        existing_email = db_global.tables.users.fetch("by_email", "one", (data['email'],))
+        existing_email = db_global.tables.users.fetch("by_email", "one", (email,))
         if existing_email:
-            return jsonify({"error": "Email already registered"}), 400
+            return jsonify({
+                "error": "Email already registered"
+            }), 400
 
         user_data = (
             data['username'],
@@ -59,7 +74,10 @@ def register():
         )
 
         user_id = db_global.tables.users.insert(user_data)
-        return jsonify({"message": "User created", "user_id": user_id}), 201
+        return jsonify({
+            "message": "User created",
+            "user_id": user_id
+        }), 201
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -74,7 +92,9 @@ def get_user(user_id):
                 "username": user[1],
                 "email": user[2],
             }), 200
-        return jsonify({"error": "User not found"}), 404
+        return jsonify({
+            "error": "User not found"
+        }), 404
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
