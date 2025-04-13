@@ -16,8 +16,8 @@ class Table:
     def update(self, data: tuple, condition: tuple) -> bool:
         return self._manager.update_data(data, condition)
 
-    def delete(self, condition: tuple) -> bool:
-        return self._manager.delete_data(condition)
+    def delete(self, query_name: str, condition: tuple) -> bool:
+        return self._manager.delete_data(query_name, condition)
 
     def fetch(self, query_name: str,
                     fetch_mode: str = "one",
