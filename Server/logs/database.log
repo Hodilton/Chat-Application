@@ -1,10 +1,12 @@
-[2025-04-10 01:27:42] 
-[2025-04-10 01:27:42] 🔸 Program start.
-[2025-04-10 01:27:42] ✅ Database config loaded successfully.
-[2025-04-10 01:27:43] ✅ Connection to database 'project-3' was successful.
-[2025-04-10 01:27:43] ✅ Tables config loaded successfully.
-[2025-04-10 01:27:43] ✅ Queries for table 'users' loaded successfully.
-[2025-04-10 01:27:43] ✅ Table 'users' initialized with queries successfully.
-[2025-04-10 02:57:20] ✅ Connection to database 'project-3' was successful close.
-[2025-04-10 02:57:20] 🔸 Program end.
-[2025-04-10 02:57:20] 
+[2025-04-13 23:05:31] 
+[2025-04-13 23:05:31] 🔸 Program start.
+[2025-04-13 23:05:31] ✅ Database config loaded successfully.
+[2025-04-13 23:05:31] ✅ Connection to database 'project-3' was successful.
+[2025-04-13 23:05:31] ✅ Tables config loaded successfully.
+[2025-04-13 23:05:31] ✅ Queries for table 'users' loaded successfully.
+[2025-04-13 23:05:31] ✅ Table 'users' initialized with queries successfully.
+[2025-04-13 23:05:31] ✅ Queries for table 'chats' loaded successfully.
+[2025-04-13 23:05:31] ✅ Table 'chats' initialized with queries successfully.
+[2025-04-13 23:05:31] ✅ Connection to database 'project-3' was successful close.
+[2025-04-13 23:05:31] 🔸 Program end.
+[2025-04-13 23:05:31] 
