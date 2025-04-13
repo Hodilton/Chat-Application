@@ -111,3 +111,17 @@ def get_all_users():
         ]), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+@users_bp.route('/users/exclude/<int:exclude_id>', methods=['GET'])
+def get_users_exclude(exclude_id):
+    try:
+        users = db_global.tables.users.fetch("all_except", "all", (exclude_id,))
+        return jsonify([
+            {
+                "id": user[0],
+                "username": user[1],
+                "email": user[2],
+            } for user in users
+        ]), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
