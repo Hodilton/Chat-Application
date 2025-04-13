@@ -11,6 +11,7 @@
         "by_username": "SELECT * FROM users WHERE username = %s;",
         "by_email": "SELECT * FROM users WHERE email = %s;",
         "all": "SELECT * FROM users;",
+        "all_except": "SELECT * FROM users WHERE id != %s;",
         "count": "SELECT COUNT(*) FROM users;"
     }
 }
