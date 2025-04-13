@@ -42,7 +42,7 @@ public class UsersFragment extends BaseFragment<FragmentUsersBinding> {
 
     private void loadUsers() {
         setLoadingState(true);
-        UserRequests.getAllUsersExcept(requireContext(),
+        UserRequests.getAllUsersExclude(requireContext(),
                 userViewModel.getCurrentUser().getValue().getId(),
                 (success, message, users) -> {
             setLoadingState(false);
