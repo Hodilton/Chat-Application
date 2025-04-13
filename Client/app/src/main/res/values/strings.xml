@@ -10,6 +10,10 @@
     <string name="activity_login_username">Username</string>
 
     <string name="main_activity_nav_chats">Chats</string>
-    <string name="main_activity_nav_new_chat">New chat</string>
+    <string name="main_activity_nav_users">Users</string>
     <string name="main_activity_nav_profile">Profile</string>
+
+    <string name="dialog_user_action_back">Отмена</string>
+    <string name="dialog_user_action_new_chat">Создать новый чат</string>
+    <string name="dialog_user_action_confirm">ОК</string>
 </resources>
