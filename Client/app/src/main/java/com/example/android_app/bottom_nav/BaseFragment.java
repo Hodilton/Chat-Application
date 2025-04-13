@@ -27,7 +27,7 @@ public abstract class BaseFragment<B extends ViewBinding> extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         binding = inflateBinding(inflater, container);
         View root = binding.getRoot();
-        progressBar = root.findViewById(R.id.new_chat_pb);
+        progressBar = root.findViewById(R.id.progressBar);
         return root;
     }
 
