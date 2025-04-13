@@ -17,8 +17,18 @@ public class UserAdapter extends BaseListAdapter<
         ItemUserBinding,
         UserAdapter.UserViewHolder> {
 
+    private OnUserLongClickListener longClickListener;
+
+    public interface OnUserLongClickListener {
+        void onUserLongClicked(User user);
+    }
+
     public UserAdapter(@NonNull Context context, @NonNull List<User> users) {
         super(context, users);
+    }
+
+    public void setOnUserLongClickListener(OnUserLongClickListener listener) {
+        this.longClickListener = listener;
     }
 
     @NonNull
@@ -39,7 +49,7 @@ public class UserAdapter extends BaseListAdapter<
         holder.bind(getItem(position));
     }
 
-    protected static class UserViewHolder extends BaseViewHolder<ItemUserBinding> {
+    protected class UserViewHolder extends BaseViewHolder<ItemUserBinding> {
         public UserViewHolder(@NonNull ItemUserBinding binding) {
             super(binding);
         }
@@ -47,6 +57,14 @@ public class UserAdapter extends BaseListAdapter<
         void bind(@NonNull User user) {
             binding.usernameTv.setText(user.getUsername());
             binding.profileIv.setImageResource(R.drawable.baseline_person_outline_24);
+
+            binding.getRoot().setOnLongClickListener(v -> {
+                if (longClickListener != null) {
+                    longClickListener.onUserLongClicked(user);
+                    return true;
+                }
+                return false;
+            });
         }
     }
 }
