@@ -1,4 +1,3 @@
-// BaseListAdapter.java
 package com.example.android_app.adapters;
 
 import android.content.Context;
