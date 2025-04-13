@@ -54,10 +54,10 @@ class TableManager:
             Messages.Error.data_updating(self.table_name)
             return False
 
-    def delete_data(self, condition: tuple) -> bool:
+    def delete_data(self, query_name: str, condition: tuple) -> bool:
         try:
             with self.connection.cursor() as cursor:
-                cursor.execute(self.queries['delete'], condition)
+                cursor.execute(self.queries['delete'][query_name], condition)
                 self.connection.commit()
                 return cursor.rowcount > 0
         except Exception as e:
