@@ -19,5 +19,6 @@
     <string name="dialog_user_action_new_chat">Создать новый чат</string>
     <string name="dialog_chat_action_delete_chat">Вы уверены, что хотите удалить этот чат?</string>
     <string name="fragment_chats_no_chats_yet">No chats yet</string>
+    <string name="activity_chat_type_your_message">Type your message...</string>
 
 </resources>
