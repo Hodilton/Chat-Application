@@ -13,7 +13,11 @@
     <string name="main_activity_nav_users">Users</string>
     <string name="main_activity_nav_profile">Profile</string>
 
-    <string name="dialog_user_action_back">Отмена</string>
+    <string name="dialog_action_cancel">Отмена</string>
+    <string name="dialog_action_confirm">ОК</string>
+
     <string name="dialog_user_action_new_chat">Создать новый чат</string>
-    <string name="dialog_user_action_confirm">ОК</string>
+    <string name="dialog_chat_action_delete_chat">Вы уверены, что хотите удалить этот чат?</string>
+    <string name="fragment_chats_no_chats_yet">No chats yet</string>
+
 </resources>
