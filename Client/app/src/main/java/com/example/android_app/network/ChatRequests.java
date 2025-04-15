@@ -24,13 +24,10 @@ public class ChatRequests extends ApiRequest {
         void onResponse(boolean success, String message);
     }
 
-    public static void getUserChats(Context context, String userId, ChatsResponseCallback callback) {
-        String url = ServerConfig.BASE_URL + "/chats";
+    public static void getUserChats(Context context, int userId, ChatsResponseCallback callback) {
+        String url = ServerConfig.BASE_URL + "/chats?user_id=" + userId;
         try {
-            JSONObject json = new JSONObject();
-            json.put("user_id", userId);
-
-            sendRequest(context, url, json.toString(),"GET",
+            sendRequest(context, url, null,"GET",
                     (success, message, response) -> runOnUiThread(context, () -> {
                         List<Chat> chats = success ? Chat.listFromJson(response) : null;
                         callback.onResponse(success, message, chats);
@@ -60,13 +57,9 @@ public class ChatRequests extends ApiRequest {
     }
 
     public static void deleteChat(Context context, int user1Id, int user2Id, BasicResponseCallback callback) {
-        String url = ServerConfig.BASE_URL + "/chats";
+        String url = ServerConfig.BASE_URL + "/chats?user1_id=" + user1Id + "&user2_id=" + user2Id;
         try {
-            JSONObject json = new JSONObject();
-            json.put("user1_id", user1Id);
-            json.put("user2_id", user2Id);
-
-            sendRequest(context, url, json.toString(), "DELETE",
+            sendRequest(context, url, null, "DELETE",
                     (success, message, response) -> runOnUiThread(context, () -> {
                         callback.onResponse(success, message);
                     }));
