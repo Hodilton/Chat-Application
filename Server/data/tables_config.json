@@ -1,6 +1,7 @@
 {
     "tables" : {
         "users": {},
-        "chats": {}
+        "chats": {},
+        "messages": {}
     }
 }
