@@ -41,13 +41,12 @@ def start_chat():
 @chats_bp.route('/chats', methods=['DELETE'])
 def delete_chat_by_users():
     try:
-        data = request.get_json()
-        user1_id = int(data.get('user1_id'))
-        user2_id = int(data.get('user2_id'))
+        user1_id = request.args.get('user1_id', type=int)
+        user2_id = request.args.get('user2_id', type=int)
 
         if not user1_id or not user2_id:
             return jsonify({
-                "error": "Both user IDs are required"
+                "error": "Both user IDs are query required"
             }), 400
 
         sorted_user1 = min(user1_id, user2_id)
@@ -64,15 +63,21 @@ def delete_chat_by_users():
 @chats_bp.route('/chats', methods=['GET'])
 def get_user_chats():
     try:
-        data = request.get_json()
-        if not data or 'user_id' not in data:
+        user_id = request.args.get('user_id', type=int)
+        if not user_id:
             return jsonify({
-                "error": "Missing user_id in request body"
+                "error": "Missing user_id parameter"
             }), 400
 
-        user_id = int(data['user_id'])
-
         chats = db_global.tables.chats.fetch("by_user", "all", (user_id, user_id))
+
+        if not chats:
+            return jsonify({
+                "user_id": user_id,
+                "message": "No chats found",
+                "count": 0,
+                "chats": []
+            }), 200
 
         result = []
         for chat in chats:
@@ -87,12 +92,12 @@ def get_user_chats():
                         "username": other_user[1],
                         "email": other_user[2]
                     },
-                    "created_at": chat[3]
+                    "created_at": chat[3].isoformat() if chat[3] else None
                 })
 
         return jsonify({
             "user_id": user_id,
-            "message": "No chats found" if not result else "Chats retrieved successfully",
+            "message": "Chats retrieved successfully",
             "count": len(result),
             "chats": result
         }), 200
