@@ -1,5 +1,6 @@
 package com.example.android_app.bottom_nav.chats;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.android_app.ChatActivity;
 import com.example.android_app.adapters.ChatAdapter;
 import com.example.android_app.bottom_nav.BaseFragment;
 import com.example.android_app.databinding.FragmentChatsBinding;
@@ -36,8 +38,25 @@ public class ChatsFragment extends BaseFragment<FragmentChatsBinding> {
 
     private void setupAdapter() {
         chatAdapter = new ChatAdapter(requireContext(), new ArrayList<>());
+        chatAdapter.setOnChatClickListener(this::openChatActivity);
         chatAdapter.setOnChatLongClickListener(this::showDeleteChatDialog);
         binding.chatsLv.setAdapter(chatAdapter);
+    }
+
+    private void openChatActivity(Chat chat) {
+        if (chat == null || chat.getOtherUser() == null) {
+            Toast.makeText(requireContext(), "Invalid chat data", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        try {
+            Intent intent = new Intent(requireActivity(), ChatActivity.class);
+            intent.putExtra("chat_id", chat.getId());
+            intent.putExtra("other_user", chat.getOtherUser());
+            startActivity(intent);
+        } catch (Exception e) {
+            Toast.makeText(requireContext(), "Error opening chat", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void loadChats() {
@@ -77,8 +96,7 @@ public class ChatsFragment extends BaseFragment<FragmentChatsBinding> {
 
         setLoadingState(true);
         ChatRequests.deleteChat(requireContext(),
-                currentUser.getId(),
-                chat.getOtherUser().getId(),
+                chat.getId(),
                 (success, message) -> {
                     setLoadingState(false);
                     if (success) {
