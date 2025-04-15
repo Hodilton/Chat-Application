@@ -1,5 +1,7 @@
 package com.example.android_app.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -12,7 +14,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User {
+public class User implements Parcelable {
     private static final String TAG = User.class.getSimpleName();
 
     private int id;
@@ -23,6 +25,36 @@ public class User {
         this.id = id;
         this.username = username;
         this.email = email;
+    }
+
+    protected User(Parcel in) {
+        id = in.readInt();
+        username = in.readString();
+        email = in.readString();
+    }
+
+    public static final Creator<User> CREATOR = new Creator<>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(username);
+        dest.writeString(email);
     }
 
     public int getId() { return id; }
