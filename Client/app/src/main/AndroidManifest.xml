@@ -36,6 +36,12 @@
             android:exported="false"
             tools:ignore="Instantiatable">
         </activity>
+
+        <activity
+            android:name=".ChatActivity"
+            android:exported="false"
+            tools:ignore="Instantiatable">
+        </activity>
     </application>
 
 </manifest>
