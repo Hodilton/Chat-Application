@@ -13,8 +13,12 @@ import java.util.List;
 
 public class ChatAdapter extends BaseListAdapter<Chat, ItemChatBinding, ChatAdapter.ChatViewHolder> {
 
+    private OnChatClickListener clickListener;
     private OnChatLongClickListener longClickListener;
 
+    public interface OnChatClickListener {
+        void onChatClicked(Chat chat);
+    }
     public interface OnChatLongClickListener {
         void onChatLongClicked(Chat chat);
     }
@@ -23,6 +27,9 @@ public class ChatAdapter extends BaseListAdapter<Chat, ItemChatBinding, ChatAdap
         super(context, chats);
     }
 
+    public void setOnChatClickListener(OnChatClickListener listener) {
+        this.clickListener = listener;
+    }
     public void setOnChatLongClickListener(OnChatLongClickListener listener) {
         this.longClickListener = listener;
     }
@@ -53,6 +60,12 @@ public class ChatAdapter extends BaseListAdapter<Chat, ItemChatBinding, ChatAdap
             binding.usernameTv.setText(chat.getOtherUser().getUsername());
             binding.lastMessageTv.setText("Last message.");
             binding.timestampTv.setText(chat.getCreatedAt());
+
+            binding.getRoot().setOnClickListener(v -> {
+                if (clickListener != null) {
+                    clickListener.onChatClicked(chat);
+                }
+            });
 
             binding.getRoot().setOnLongClickListener(v -> {
                 if (longClickListener != null) {
