@@ -56,8 +56,9 @@ public class ChatRequests extends ApiRequest {
         }
     }
 
-    public static void deleteChat(Context context, int user1Id, int user2Id, BasicResponseCallback callback) {
-        String url = ServerConfig.BASE_URL + "/chats?user1_id=" + user1Id + "&user2_id=" + user2Id;
+    public static void deleteChat(Context context, int chatId, BasicResponseCallback callback) {
+        String url = ServerConfig.BASE_URL + "/chats/" + chatId;
+
         try {
             sendRequest(context, url, null, "DELETE",
                     (success, message, response) -> runOnUiThread(context, () -> {
