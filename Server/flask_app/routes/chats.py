@@ -38,6 +38,16 @@ def start_chat():
         return jsonify({"error": str(e)}), 500
 
 
+@chats_bp.route('/chats/<int:chat_id>', methods=['DELETE'])
+def delete_chat(chat_id):
+    try:
+        db_global.tables.messages.delete("by_chat_id", (chat_id,))
+        db_global.tables.chats.delete("by_id", (chat_id,))
+
+        return jsonify({"message": "Chat and all messages deleted successfully"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 @chats_bp.route('/chats', methods=['DELETE'])
 def delete_chat_by_users():
     try:
