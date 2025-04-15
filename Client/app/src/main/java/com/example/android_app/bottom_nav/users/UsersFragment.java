@@ -79,8 +79,7 @@ public class UsersFragment extends BaseFragment<FragmentUsersBinding> {
                         Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(requireContext(),
-                        "Error in create chat: " + message,
-                        Toast.LENGTH_LONG).show();
+                        "Error in create chat: " + message, Toast.LENGTH_LONG).show();
             }
         });
     }
