@@ -178,11 +178,11 @@ cython_debug/
 **/app/src/test/java/com/example
 **/app/**/ServerConfig.java
 **/app/proguard-rules.pro
-**/gradle/wrapper
+**/gradle/
 
 gradlew
 gradlew.bat
-# build.gradle
+build.gradle
 gradle.properties
 settings.gradle
 
