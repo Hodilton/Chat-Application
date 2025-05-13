@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Android_app</string>
+    <string name="app_name">Android_app_m</string>
 
     <string name="activity_auth_email">Email</string>
     <string name="activity_auth_password">Password</string>
