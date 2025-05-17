@@ -5,11 +5,12 @@ description = ""
 authors = [
     {name = "John Doe",email = "john@doe.com"}
 ]
-readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
 ]
 
+[tool.poetry.dependencies]
+file-work = { path = "./file-work", develop = true}
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
@@ -17,3 +18,4 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 package-mode = false
+exclude = ["README.md", "tests/"]
