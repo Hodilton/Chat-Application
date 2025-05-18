@@ -49,13 +49,13 @@ manager.log(["console", "file"], "Test INFO message to list loggers", level="INF
 manager.log_all("System shutting down!!!", level="CRITICAL")
 ```
 ## Output
-```json
+```python
 # console
 [2025-05-18 22:54:36] DEBUG: Test DEBUG message to console only
 [2025-05-18 22:54:36] INFO: Test INFO message to list loggers
 [2025-05-18 22:54:36] CRITICAL: System shutting down!!!
 ```
-```json
+```python
 # file
 [2025-05-18 22:54:36] WARNING: Test WARNING message to file only
 [2025-05-18 22:54:36] INFO: Test INFO message to list loggers
