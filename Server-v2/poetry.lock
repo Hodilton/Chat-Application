@@ -10,11 +10,28 @@ groups = ["main"]
 files = []
 develop = true
 
+[package.extras]
+csv = []
+
 [package.source]
 type = "directory"
 url = "file-work"
 
+[[package]]
+name = "log-manager"
+version = "0.1.0"
+description = ""
+optional = false
+python-versions = ">=3.13"
+groups = ["main"]
+files = []
+develop = true
+
+[package.source]
+type = "directory"
+url = "log-manager"
+
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.13"
-content-hash = "1b34f87169eabca373a5d313a6253810260b30c7454627e6898ff48fad361209"
+content-hash = "1c1772de4e119fb1fede1dbbea5cbf2decf11b2fd466bb11afca2b3c2d2f51b2"
