@@ -8,27 +8,36 @@
     tools:context=".RegisterActivity"
     android:background="@color/white">
 
-    <Button
-        android:id="@+id/back_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="14dp"
-        android:layout_marginTop="24dp"
-        android:backgroundTint="@color/white"
-        android:src="@drawable/ic_round_arrow_back"
+    <View
+        android:id="@+id/backButtonBackground"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/round_back_button_background"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="SpeakableTextPresentCheck" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/back_btn"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:background="@null"
+        android:src="@drawable/ic_round_arrow_back"
+        app:layout_constraintBottom_toBottomOf="@id/backButtonBackground"
+        app:layout_constraintEnd_toEndOf="@id/backButtonBackground"
+        app:layout_constraintStart_toStartOf="@id/backButtonBackground"
+        app:layout_constraintTop_toTopOf="@id/backButtonBackground"
+        tools:ignore="ContentDescription,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="34dp"
+        android:layout_width="312dp"
+        android:layout_height="285dp"
+        android:layout_marginTop="16dp"
         android:src="@drawable/image2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/backButtonBackground"
         tools:ignore="ContentDescription" />
 
     <TextView
@@ -37,22 +46,21 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="55dp"
         android:layout_marginTop="34dp"
-        android:hint="@string/activity_auth_sign_up"
+        android:text="@string/activity_auth_sign_up"
         android:textColor="@color/black"
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        tools:ignore="TextContrastCheck" />
+        app:layout_constraintTop_toBottomOf="@id/imageView" />
 
     <LinearLayout
+        android:id="@+id/email_ll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/email_ll"
         android:layout_marginStart="50dp"
         android:layout_marginTop="34dp"
+        android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@id/login_title_tv"
-        app:layout_constraintStart_toStartOf="parent"
-        android:orientation="horizontal">
+        app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
             android:id="@+id/icon_email"
@@ -70,18 +78,17 @@
             android:hint="@string/activity_auth_email"
             android:textColor="@color/black"
             tools:ignore="Autofill,TextFields,TouchTargetSizeCheck" />
-
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/username_ll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/username_ll"
         android:layout_marginStart="50dp"
         android:layout_marginTop="15dp"
+        android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@id/email_ll"
-        app:layout_constraintStart_toStartOf="parent"
-        android:orientation="horizontal">
+        app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
             android:id="@+id/icon_username"
@@ -99,19 +106,17 @@
             android:hint="@string/activity_login_username"
             android:textColor="@color/black"
             tools:ignore="Autofill,TextFields,TouchTargetSizeCheck,TextContrastCheck" />
-
     </LinearLayout>
 
-
     <LinearLayout
+        android:id="@+id/password_ll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/password_ll"
         android:layout_marginStart="50dp"
         android:layout_marginTop="15dp"
+        android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@id/username_ll"
-        app:layout_constraintStart_toStartOf="parent"
-        android:orientation="horizontal">
+        app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
             android:id="@+id/icon_password"
@@ -129,8 +134,6 @@
             android:hint="@string/activity_auth_password"
             android:textColor="@color/black"
             tools:ignore="Autofill,TouchTargetSizeCheck,TextContrastCheck" />
-<!--        android:inputType="textPassword"-->
-
     </LinearLayout>
 
     <Button
@@ -139,21 +142,21 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/blue"
-        android:hint="@string/activity_auth_sign_up"
+        android:text="@string/activity_auth_sign_up"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password_ll"
-        tools:ignore="DuplicateSpeakableTextCheck" />
+        app:layout_constraintTop_toBottomOf="@id/password_ll"
+        tools:ignore="DuplicateSpeakableTextCheck,TextContrastCheck" />
 
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/sign_up_btn"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
