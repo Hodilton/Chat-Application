@@ -59,8 +59,8 @@ function Get-Messages {
 Write-Host "=== MESSAGES API TESTING ===" -ForegroundColor Yellow
 
 # 1. Send message
-#Send-Message -chat_id 5 -sender_id 1 -content "Hello, how are you?"
-Send-Message -chat_id 5 -sender_id 1 -content "How about going to a cafe?"
+#Send-Message -chat_id 6 -sender_id 1 -content "Hello, how are you?"
+Send-Message -chat_id 6 -sender_id 1 -content "How about going to a cafe?"
 
 # 2. Get messages
 #Get-Messages -chat_id 1

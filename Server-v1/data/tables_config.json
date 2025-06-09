@@ -2,6 +2,7 @@
     "tables" : {
         "users": {},
         "chats": {},
+        "chat_members": {},
         "messages": {}
     }
 }
