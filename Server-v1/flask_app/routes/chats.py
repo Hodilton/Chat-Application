@@ -21,17 +21,20 @@ def create_chat():
         for user_id in user_ids:
             db_global.tables.chat_members.insert((chat_id, user_id))
 
-        return jsonify({"message": "Chat created", "chat_id": chat_id}), 201
+        return jsonify({
+            "message": "Chat created",
+            "chat_id": chat_id
+        }), 201
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
 @chats_bp.route('/chats/<int:chat_id>', methods=['DELETE'])
 def delete_chat(chat_id):
     try:
-        db_global.tables.messages.delete("by_chat_id", (chat_id,))
-        db_global.tables.chat_members.delete("by_chat", (chat_id,))
         db_global.tables.chats.delete("by_id", (chat_id,))
-        return jsonify({"message": "Chat deleted"}), 200
+        return jsonify({
+            "message": "Chat deleted"
+        }), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -40,11 +43,9 @@ def get_user_chats():
     try:
         user_id = request.args.get('user_id', type=int)
         if not user_id:
-            return jsonify({"error": "Missing user_id parameter"}), 400
+            return jsonify({"error": "Missing required user fields"}), 400
 
         chat_ids = db_global.tables.chat_members.fetch("chats_by_user", "all", (user_id,))
-        if not chat_ids:
-            return jsonify({"user_id": user_id, "chats": []}), 200
 
         chats = []
         for row in chat_ids:
@@ -60,6 +61,9 @@ def get_user_chats():
                 "members": [{"id": m[0], "username": m[1], "email": m[2]} for m in members]
             })
 
-        return jsonify({"user_id": user_id, "chats": chats}), 200
+        return jsonify({
+            "user_id": user_id,
+            "chats": chats
+        }), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500

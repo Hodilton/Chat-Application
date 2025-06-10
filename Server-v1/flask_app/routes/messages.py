@@ -16,8 +16,8 @@ def send_message():
         sender_id = int(data.get('sender_id'))
         content = str(data.get('content', '')).strip()
 
-        if not content:
-            return jsonify({"error": "Message content cannot be empty"}), 400
+        if not all([chat_id, sender_id, content]):
+            return jsonify({"error": "Missing required message fields"}), 400
 
         if not db_global.tables.chats.fetch("by_id", "one", (chat_id,)):
             return jsonify({"error": "Chat not found"}), 404
@@ -43,20 +43,30 @@ def send_message():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+@messages_bp.route('/messages/<int:message_id>', methods=['DELETE'])
+def delete_message(message_id):
+    try:
+        db_global.tables.messages.delete("by_id", (message_id,))
+        return jsonify({
+            "message": "Message deleted"
+        }), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 @messages_bp.route('/messages/<int:chat_id>', methods=['GET'])
 def get_chat_messages(chat_id):
     try:
         messages = db_global.tables.messages.fetch("by_chat", "all", (chat_id,))
         result = [{
-            "id": m[0],
+            "id": message[0],
             "chat_id": chat_id,
-            "content": m[1],
-            "sent_at": m[2].strftime("%Y-%m-%d %H:%M:%S"),
+            "content": message[1],
+            "sent_at": message[2].strftime("%Y-%m-%d %H:%M:%S"),
             "sender": {
-                "id": m[3],
-                "username": m[4]
+                "id": message[3],
+                "username": message[4]
             }
-        } for m in messages]
+        } for message in messages]
 
         return jsonify({
             "chat_id": chat_id,
@@ -72,27 +82,19 @@ def get_new_messages(chat_id):
         last_id = request.args.get('last_id', default=0, type=int)
         new_messages = db_global.tables.messages.fetch("new_messages", "all", (chat_id, last_id))
         result = [{
-            "id": m[0],
-            "content": m[1],
-            "sent_at": m[2].strftime("%Y-%m-%d %H:%M:%S"),
+            "id": message[0],
+            "content": message[1],
+            "sent_at": message[2].strftime("%Y-%m-%d %H:%M:%S"),
             "sender": {
-                "id": m[3],
-                "username": m[4]
+                "id": message[3],
+                "username": message[4]
             }
-        } for m in new_messages]
+        } for message in new_messages]
 
         return jsonify({
             "chat_id": chat_id,
             "count": len(result),
             "messages": result
         }), 200
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
-@messages_bp.route('/messages/<int:message_id>', methods=['DELETE'])
-def delete_message(message_id):
-    try:
-        db_global.tables.messages.delete("by_id", (message_id,))
-        return jsonify({"message": "Message deleted"}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500

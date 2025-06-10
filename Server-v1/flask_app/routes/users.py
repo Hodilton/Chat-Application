@@ -57,6 +57,20 @@ def login():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+@users_bp.route('/users', methods=['GET'])
+def get_all_users():
+    try:
+        users = db_global.tables.users.fetch("all", "all")
+        return jsonify([
+            {
+                "id": user[0],
+                "username": user[1],
+                "email": user[2],
+            } for user in users
+        ]), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 @users_bp.route('/users/<int:user_id>', methods=['GET'])
 def get_user(user_id):
     try:
@@ -70,20 +84,6 @@ def get_user(user_id):
                 "username": user[1],
                 "email": user[2],
             }), 200
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
-@users_bp.route('/users', methods=['GET'])
-def get_all_users():
-    try:
-        users = db_global.tables.users.fetch("all", "all")
-        return jsonify([
-            {
-                "id": user[0],
-                "username": user[1],
-                "email": user[2],
-            } for user in users
-        ]), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
