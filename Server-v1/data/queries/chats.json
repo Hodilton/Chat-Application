@@ -6,8 +6,8 @@
     "by_id": "DELETE FROM chats WHERE id = %s;"
   },
   "fetch": {
-    "by_id": "SELECT * FROM chats WHERE id = %s;",
-    "all": "SELECT * FROM chats;",
+    "by_id": "SELECT id, name, created_at FROM chats WHERE id = %s;",
+    "all": "SELECT id, name, created_at FROM chats;",
     "by_user": "SELECT c.id, c.name, c.created_at FROM chats c JOIN chat_members cm ON c.id = cm.chat_id WHERE cm.user_id = %s;"
   }
 }
