@@ -1,8 +1,8 @@
 {
     "database": {
-        "host": "MySQL-8.2",
-        "user": "project-3-admin",
+        "host": "MySQL-8.4",
+        "user": "prac-3-admin",
         "password": "admin",
-        "name": "project-3"
+        "name": "prac-3"
     }
 }
