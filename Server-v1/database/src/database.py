@@ -40,8 +40,9 @@ class Database:
         return True
 
     def reset(self) -> None:
-        self._handler.drop_tables()
-        self._handler.create_tables()
+        if self._connection.is_connected:
+            self._handler.drop_tables()
+            self._handler.create_tables()
 
     def close(self) -> None:
         if self._connection:
