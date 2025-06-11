@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.example.android_app.models.Chat;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.List;
@@ -38,12 +39,30 @@ public class ChatRequests extends ApiRequest {
         }
     }
 
-    public static void startChat(Context context, String user1Id, String user2Id, ChatResponseCallback callback) {
-        String url = ServerConfig.BASE_URL + "/chats/start";
+//    public static void startChat(Context context, String user1Id, String user2Id, ChatResponseCallback callback) {
+//        String url = ServerConfig.BASE_URL + "/chats/start";
+//        try {
+//            JSONObject json = new JSONObject();
+//            json.put("user1_id", user1Id);
+//            json.put("user2_id", user2Id);
+//
+//            sendRequest(context, url, json.toString(), "POST",
+//                    (success, message, response) -> runOnUiThread(context, () -> {
+//                        Chat chat = success ? Chat.fromJson(response) : null;
+//                        callback.onResponse(success, message, chat);
+//                    }));
+//        } catch (Exception e) {
+//            Log.e(TAG, "Start chat error", e);
+//            callback.onResponse(false, "Start chat request failed.", null);
+//        }
+//    }
+
+    public static void startChat(Context context, String chatName, List<String> userIds, ChatResponseCallback callback) {
+        String url = ServerConfig.BASE_URL + "/chats";
         try {
             JSONObject json = new JSONObject();
-            json.put("user1_id", user1Id);
-            json.put("user2_id", user2Id);
+            json.put("name", chatName);
+            json.put("user_ids", new JSONArray(userIds));
 
             sendRequest(context, url, json.toString(), "POST",
                     (success, message, response) -> runOnUiThread(context, () -> {
@@ -55,6 +74,7 @@ public class ChatRequests extends ApiRequest {
             callback.onResponse(false, "Start chat request failed.", null);
         }
     }
+
 
     public static void deleteChat(Context context, int chatId, BasicResponseCallback callback) {
         String url = ServerConfig.BASE_URL + "/chats/" + chatId;

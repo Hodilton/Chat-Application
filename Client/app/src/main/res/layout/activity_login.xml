@@ -86,7 +86,7 @@
             android:layout_marginStart="9dp"
             android:hint="@string/activity_auth_password"
             android:textColor="@color/black"
-            tools:ignore="Autofill,TextContrastCheck,TouchTargetSizeCheck" />
+            tools:ignore="Autofill,TextContrastCheck,TextFields,TouchTargetSizeCheck" />
         <!--        android:inputType="textVisiblePassword"-->
 
     </LinearLayout>

@@ -18,6 +18,7 @@ import com.example.android_app.network.UserRequests;
 import com.example.android_app.view_models.UserViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class UsersFragment extends BaseFragment<FragmentUsersBinding> {
     private UserAdapter userAdapter;
@@ -68,9 +69,15 @@ public class UsersFragment extends BaseFragment<FragmentUsersBinding> {
         if (currentUser == null || otherUser == null) return;
 
         setLoadingState(true);
+
+        String chatName = currentUser.getUsername() + ", " + otherUser.getUsername();
+        List<String> userIds = new ArrayList<>();
+        userIds.add(String.valueOf(currentUser.getId()));
+        userIds.add(String.valueOf(otherUser.getId()));
+
         ChatRequests.startChat(requireContext(),
-                String.valueOf(currentUser.getId()),
-                String.valueOf(otherUser.getId()),
+                chatName,
+                userIds,
                 (success, message, chat) -> {
             setLoadingState(false);
             if (success) {
