@@ -14,7 +14,7 @@ class DatabaseWrapper:
             if not queries:
                 raise ValueError(f"No queries found for table '{table_name}'")
             self._repositories[table_name] = BaseAioRepository(
-                pool=self._connection._pool,
+                pool=self._connection.pool,
                 queries=queries,
                 table_name=table_name,
             )

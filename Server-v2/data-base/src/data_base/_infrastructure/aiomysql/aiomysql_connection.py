@@ -30,3 +30,7 @@ class AioMySQLConnection:
         if self._pool:
             self._pool.close()
             await self._pool.wait_closed()
+
+    @property
+    def pool(self):
+        return self._pool
