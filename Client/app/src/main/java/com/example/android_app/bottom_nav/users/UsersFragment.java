@@ -78,6 +78,7 @@ public class UsersFragment extends BaseFragment<FragmentUsersBinding> {
         ChatRequests.startChat(requireContext(),
                 chatName,
                 userIds,
+                currentUser.getId(),
                 (success, message, chat) -> {
             setLoadingState(false);
             if (success) {

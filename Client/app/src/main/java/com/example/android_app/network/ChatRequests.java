@@ -30,7 +30,7 @@ public class ChatRequests extends ApiRequest {
         try {
             sendRequest(context, url, null,"GET",
                     (success, message, response) -> runOnUiThread(context, () -> {
-                        List<Chat> chats = success ? Chat.listFromJson(response) : null;
+                        List<Chat> chats = success ? Chat.listFromJson(response, userId) : null;
                         callback.onResponse(success, message, chats);
                     }));
         } catch (Exception e) {
@@ -57,7 +57,7 @@ public class ChatRequests extends ApiRequest {
 //        }
 //    }
 
-    public static void startChat(Context context, String chatName, List<String> userIds, ChatResponseCallback callback) {
+    public static void startChat(Context context, String chatName, List<String> userIds, int currentUserId, ChatResponseCallback callback) {
         String url = ServerConfig.BASE_URL + "/chats";
         try {
             JSONObject json = new JSONObject();
@@ -66,7 +66,7 @@ public class ChatRequests extends ApiRequest {
 
             sendRequest(context, url, json.toString(), "POST",
                     (success, message, response) -> runOnUiThread(context, () -> {
-                        Chat chat = success ? Chat.fromJson(response) : null;
+                        Chat chat = success ? Chat.fromJson(response, currentUserId) : null;
                         callback.onResponse(success, message, chat);
                     }));
         } catch (Exception e) {

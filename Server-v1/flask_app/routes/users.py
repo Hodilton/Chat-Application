@@ -13,7 +13,7 @@ def register():
         data = request.get_json()
         username = str(data['username'])
         email = str(data['email'])
-        password_hash = str(data('password'))
+        password_hash = str(data['password'])
 
         if not all([username, email, password_hash]):
             return jsonify({"error": "Missing required user fields"}), 400
@@ -38,14 +38,14 @@ def login():
     try:
         data = request.get_json()
         email = str(data['email'])
-        password_hash = str(data('password'))
+        password_hash = str(data['password'])
 
         if not all([email, password_hash]):
             return jsonify({"error": "Missing required user fields"}), 400
 
         user = db_global.tables.users.fetch("by_email", "one", (email,))
 
-        if not user or password != user[3]:
+        if not user or password_hash != user[3]:
             return jsonify({"error": "Invalid email or password"}), 401
 
         return jsonify({

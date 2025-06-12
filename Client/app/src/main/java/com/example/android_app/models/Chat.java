@@ -26,46 +26,101 @@ public class Chat {
     public User getOtherUser() { return otherUser; }
     public String getCreatedAt() { return createdAt; }
 
-    public static Chat fromJson(JSONObject json) {
+    public static Chat fromJson(JSONObject json, int currentUserId) {
         try {
-            JSONObject userJson = json.getJSONObject("user");
-            User user = User.fromJson(userJson);
+            int chatId = json.getInt("chat_id");
+            String createdAt = json.getString("created_at");
+            JSONArray members = json.getJSONArray("members");
 
-            return new Chat(
-                    json.getInt("chat_id"),
-                    user,
-                    json.getString("created_at")
-            );
+            User otherUser = null;
+            for (int i = 0; i < members.length(); i++) {
+                User user = User.fromJson(members.getJSONObject(i));
+                if (user.getId() != currentUserId) {
+                    otherUser = user;
+                    break;
+                }
+            }
+
+            if (otherUser == null && members.length() > 0) {
+                // fallback: если не нашли другого, берем первого
+                otherUser = User.fromJson(members.getJSONObject(0));
+            }
+
+            return new Chat(chatId, otherUser, createdAt);
+
         } catch (Exception e) {
             Log.e(TAG, "Error parsing chat json", e);
             return null;
         }
     }
 
-    public static Chat fromJson(String jsonString) {
+    public static Chat fromJson(String jsonString, int currentUserId) {
         try {
             JSONObject json = new JSONObject(jsonString);
-            return fromJson(json);
+            return fromJson(json, currentUserId);
         } catch (Exception e) {
             Log.e(TAG, "Error parsing chat data", e);
             return null;
         }
     }
 
-    public static List<Chat> listFromJson(String jsonString) {
+    public static List<Chat> listFromJson(String jsonString, int currentUserId) {
         List<Chat> chats = new ArrayList<>();
         try {
             JSONObject root = new JSONObject(jsonString);
             JSONArray chatsArray = root.getJSONArray("chats");
 
             for (int i = 0; i < chatsArray.length(); i++) {
-                chats.add(fromJson(chatsArray.getJSONObject(i)));
+                chats.add(fromJson(chatsArray.getJSONObject(i), currentUserId));
             }
         } catch (Exception e) {
             Log.e(TAG, "Error parsing chats list", e);
         }
         return chats;
     }
+
+
+
+//    public static Chat fromJson(JSONObject json) {
+//        try {
+//            JSONObject userJson = json.getJSONObject("user");
+//            User user = User.fromJson(userJson);
+//
+//            return new Chat(
+//                    json.getInt("chat_id"),
+//                    user,
+//                    json.getString("created_at")
+//            );
+//        } catch (Exception e) {
+//            Log.e(TAG, "Error parsing chat json", e);
+//            return null;
+//        }
+//    }
+//
+//    public static Chat fromJson(String jsonString) {
+//        try {
+//            JSONObject json = new JSONObject(jsonString);
+//            return fromJson(json);
+//        } catch (Exception e) {
+//            Log.e(TAG, "Error parsing chat data", e);
+//            return null;
+//        }
+//    }
+//
+//    public static List<Chat> listFromJson(String jsonString) {
+//        List<Chat> chats = new ArrayList<>();
+//        try {
+//            JSONObject root = new JSONObject(jsonString);
+//            JSONArray chatsArray = root.getJSONArray("chats");
+//
+//            for (int i = 0; i < chatsArray.length(); i++) {
+//                chats.add(fromJson(chatsArray.getJSONObject(i)));
+//            }
+//        } catch (Exception e) {
+//            Log.e(TAG, "Error parsing chats list", e);
+//        }
+//        return chats;
+//    }
 
     public JSONObject toJson() throws JSONException {
         JSONObject json = new JSONObject();
