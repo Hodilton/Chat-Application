@@ -22,7 +22,7 @@ class DatabaseWrapper:
 
     @property
     def is_connected(self) -> bool:
-        return self._connection.is_connected()
+        return self._connection.is_connected
 
     async def close(self):
         await self._connection.close()
