@@ -12,6 +12,7 @@
     <string name="main_activity_nav_chats">Chats</string>
     <string name="main_activity_nav_users">Users</string>
     <string name="main_activity_nav_profile">Profile</string>
+    <string name="main_activity_nav_practice">Practice</string>
 
     <string name="dialog_action_cancel">Отмена</string>
     <string name="dialog_action_confirm">ОК</string>

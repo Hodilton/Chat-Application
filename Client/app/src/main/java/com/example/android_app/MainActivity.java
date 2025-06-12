@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.example.android_app.bottom_nav.practice.PracticeFragment;
 import com.example.android_app.bottom_nav.chats.ChatsFragment;
 import com.example.android_app.bottom_nav.users.UsersFragment;
 import com.example.android_app.bottom_nav.profile.ProfileFragment;
@@ -13,7 +14,7 @@ import com.example.android_app.view_models.UserViewModel;
 import com.example.android_app.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
-    private static final int DEFAULT_FRAGMENT_ID = R.id.chats;
+    private static final int DEFAULT_FRAGMENT_ID = R.id.practice;
     private ActivityMainBinding binding;
 
     @Override
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupFragments() {
-        replaceFragment(new ChatsFragment());
+        replaceFragment(new PracticeFragment());
         binding.bottomNav.setSelectedItemId(DEFAULT_FRAGMENT_ID);
     }
 
@@ -53,6 +54,9 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             } else if (itemId == R.id.profile) {
                 replaceFragment(new ProfileFragment());
+                return true;
+            } else if (itemId == R.id.practice) {
+                replaceFragment(new PracticeFragment());
                 return true;
             }
             return false;
