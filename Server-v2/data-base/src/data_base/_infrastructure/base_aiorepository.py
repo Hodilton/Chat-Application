@@ -1,15 +1,14 @@
-from typing import Tuple
+from typing import Tuple, Optional, List, Union
 from .aiomysql.aiomysql_repository import AioMySQLRepository
 
 class BaseAioRepository(AioMySQLRepository):
-    def __init__(self, pool, queries: dict, table_name: str = None):
+    def __init__(self, pool: aiomysql.Pool, queries: dict, table_name: Optional[str] = None) -> None:
         super().__init__(pool, queries)
         self._table_name = table_name
 
     def _resolve_query(self, key_path: str) -> str:
-        keys = key_path.split(".")
         query = self._queries
-        for key in keys:
+        for key in key_path.split("."):
             query = query[key]
         return query
 
@@ -17,13 +16,15 @@ class BaseAioRepository(AioMySQLRepository):
         query = self._resolve_query(query_key)
         return await super().execute(query, params)
 
-    async def fetch_one(self, query_key: str, params: Tuple = ()):
+    async def fetch_one(self, query_key: str, params: Tuple = ()) -> Optional[dict]:
         query = self._resolve_query(query_key)
-        return await super().fetch(query, params, fetch_mode="one")
+        result = await super().fetch(query, params, fetch_mode="one")
+        return result if isinstance(result, dict) else None
 
-    async def fetch_all(self, query_key: str, params: Tuple = ()):
+    async def fetch_all(self, query_key: str, params: Tuple = ()) -> Union[List[dict], None]:
         query = self._resolve_query(query_key)
-        return await super().fetch(query, params, fetch_mode="all")
+        result = await super().fetch(query, params, fetch_mode="all")
+        return  result if isinstance(result, list) else None
 
     async def create(self) -> int:
         return await self.execute("create")
