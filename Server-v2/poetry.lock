@@ -184,6 +184,7 @@ develop = true
 
 [package.dependencies]
 aiomysql = "^0.2.0"
+cryptography = "^45.0.4"
 file-work = {path = "../file-work"}
 
 [package.source]
@@ -256,4 +257,4 @@ rsa = ["cryptography"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.13"
-content-hash = "bf555c0406f4b21b78bf881f1df0e2aca181853e6437d119c8347431a32ab71b"
+content-hash = "6ba94c99bf8aa5b7f18abc9ae1686dbbbee0fbf1bd4fe90f1e74d4d9126b71cb"
