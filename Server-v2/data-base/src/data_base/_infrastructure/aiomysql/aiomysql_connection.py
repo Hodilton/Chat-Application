@@ -1,9 +1,11 @@
+from typing import Optional
 import aiomysql
+from .._shared.messages.msg_db import MsgDataBase
 
 class AioMySQLConnection:
-    def __init__(self, config: dict):
+    def __init__(self, config: dict) -> None:
         self._config = config
-        self._pool = None
+        self._pool: Optional[aiomysql.Pool] = None
 
     async def connect(self) -> bool:
         try:
@@ -14,14 +16,15 @@ class AioMySQLConnection:
                 db=self._config["name"],
                 autocommit=True
             )
+            MsgDB.Success.connection_established()
             return True
         except Exception as e:
-            print(f"[ERROR] Connection failed: {e}")
+            MsgDataBase.Failure.connection_failed(str(e))
             return False
 
     @property
     def is_connected(self) -> bool:
-        return self._pool is not None
+        return self._pool is not None and not self._pool.closed
 
     async def close(self):
         if self._pool:
