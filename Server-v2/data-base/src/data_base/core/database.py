@@ -1,15 +1,24 @@
+from typing import Optional
+from .._infrastructure.database_wrapper import DatabaseWrapper
 from .database_builder import DatabaseBuilder
+from .._shared.messages.msg_database import MsgDataBase
+from .._shared.exceptions import DatabaseError
 
 class Database:
-    _instance = None
+    _instance: Optional[DatabaseWrapper] = None
 
-    def __init__(self):
-        self._db = None
+    def __init__(self) -> None:
+        self._db: Optional[DatabaseWrapper] = None
 
-    async def __aenter__(self):
+    async def __aenter__(self) -> Optional[DatabaseWrapper]:
         if Database._instance is None:
             builder = DatabaseBuilder("config/database")
             Database._instance = await builder.build()
+
+            if Database._instance is None:
+                MsgDataBase.Failure.instance_build_failed()
+                raise DatabaseError("Database build failed.")
+
         self._db = Database._instance
         return self._db
 
@@ -21,3 +30,22 @@ class Database:
         if cls._instance is not None:
             await cls._instance.close()
             cls._instance = None
+
+    @classmethod
+    async def reset(cls):
+        if cls._instance is None:
+            MsgDataBase.Failure.instance_build_failed()
+            return
+
+        queries_dict = cls._instance.queries_dict
+        table_names: List[str] = list(queries_dict.keys())
+
+        for table_name in reversed(table_names):
+            repo = cls._instance.get_repository(table_name)
+            if repo is not None:
+                await repo.drop()
+
+        for table_name in table_names:
+            repo = cls._instance.get_repository(table_name)
+            if repo is not None:
+                await repo.create()

@@ -1,6 +1,6 @@
 from typing import Any, Tuple, Optional, List
 import aiomysql
-from .._shared.messages.msg_db import MsgDataBase
+from ..._shared.messages.msg_database import MsgDataBase
 
 class AioMySQLRepository:
     def __init__(self, pool: aiomysql.Pool, queries: dict) -> None:

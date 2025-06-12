@@ -1,6 +1,6 @@
 from typing import Optional
 import aiomysql
-from .._shared.messages.msg_db import MsgDataBase
+from ..._shared.messages.msg_database import MsgDataBase
 
 class AioMySQLConnection:
     def __init__(self, config: dict) -> None:
@@ -16,7 +16,7 @@ class AioMySQLConnection:
                 db=self._config["name"],
                 autocommit=True
             )
-            MsgDB.Success.connection_established()
+            MsgDataBase.Success.connection_established()
             return True
         except Exception as e:
             MsgDataBase.Failure.connection_failed(str(e))

@@ -1,6 +1,7 @@
-from typing import Dict
+from typing import Dict, Optional
 from .base_aiorepository import BaseAioRepository
 from .aiomysql.aiomysql_connection import AioMySQLConnection
+from .._shared.messages.msg_database import MsgDataBase
 
 class DatabaseWrapper:
     def __init__(self, connection: AioMySQLConnection, queries_dict: Dict[str, dict]) -> None:
@@ -8,11 +9,12 @@ class DatabaseWrapper:
         self._queries_dict = queries_dict
         self._repositories: Dict[str, BaseAioRepository] = {}
 
-    def get_repository(self, table_name: str) -> BaseAioRepository:
+    def get_repository(self, table_name: str) -> Optional[BaseAioRepository]:
         if table_name not in self._repositories:
             queries = self._queries_dict.get(table_name)
             if not queries:
-                raise ValueError(f"No queries found for table '{table_name}'")
+                MsgDataBase.Failure.query_miss_failed(table_name)
+                return None
             self._repositories[table_name] = BaseAioRepository(
                 pool=self._connection.pool,
                 queries=queries,
@@ -24,11 +26,15 @@ class DatabaseWrapper:
     def is_connected(self) -> bool:
         return self._connection.is_connected
 
-    async def close(self):
+    async def close(self) -> None:
         await self._connection.close()
 
-    async def __aenter__(self):
+    async def __aenter__(self) -> "AsyncDatabaseClient":
         return self
 
-    async def __aexit__(self, exc_type, exc, tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         await self.close()
+
+    @property
+    def queries_dict(self):
+        return self._queries_dict

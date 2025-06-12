@@ -1,8 +1,8 @@
 from typing import Optional
-from data_base._config.load.database_config_loader import DataBaseConfigLoader
-from data_base._config.load.tables_config_loader import TablesConfigLoader
-from data_base._config.load.queries_config_loader import QueriesConfigLoader
-from data_base._config.parse.config_parser import ConfigParser
+from .load.database_config_loader import DataBaseConfigLoader
+from .load.tables_config_loader import TablesConfigLoader
+from .load.queries_config_loader import QueriesConfigLoader
+from .parse.config_parser import ConfigParser
 
 class ConfigBootstrapper:
     def __init__(self, config_path: str):

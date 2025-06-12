@@ -1,3 +1,4 @@
+import aiomysql
 from typing import Tuple, Optional, List, Union
 from .aiomysql.aiomysql_repository import AioMySQLRepository
 
