@@ -20,7 +20,7 @@
       "propagate": false
     },
      "data-base": {
-      "level": "DEBUG",
+      "level": "ERROR",
       "handlers": ["console"],
       "propagate": false
     }
