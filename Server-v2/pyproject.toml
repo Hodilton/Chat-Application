@@ -8,6 +8,9 @@ authors = [
 requires-python = ">=3.13"
 
 [tool.poetry.dependencies]
+fastapi = "^0.115.12"
+uvicorn = { extras = ["standard"], version = "^0.34.3" }
+pydantic = {extras = ["email"], version = "^2.11.6"}
 data-base = { path = "./data-base", develop = true}
 log-manager = { path = "./log-manager", develop = true}
 
