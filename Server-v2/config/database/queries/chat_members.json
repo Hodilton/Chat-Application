@@ -7,6 +7,7 @@
     "by_chat": "DELETE FROM chat_members WHERE chat_id = %s;"
   },
   "fetch": {
+    "member_by_chat_and_user": "SELECT * FROM chat_members WHERE chat_id = %s AND user_id = %s;",
     "members_by_chat": "SELECT u.id, u.username, u.email FROM chat_members cm JOIN users u ON cm.user_id = u.id WHERE cm.chat_id = %s;",
     "chats_by_user": "SELECT chat_id FROM chat_members WHERE user_id = %s;",
     "is_member": "SELECT 1 FROM chat_members WHERE chat_id = %s AND user_id = %s LIMIT 1;"

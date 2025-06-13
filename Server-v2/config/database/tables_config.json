@@ -1,5 +1,8 @@
 {
   "tables" : {
-    "users": {}
+    "users": {},
+    "chats": {},
+    "chat_members": {},
+    "messages": {}
   }
 }
