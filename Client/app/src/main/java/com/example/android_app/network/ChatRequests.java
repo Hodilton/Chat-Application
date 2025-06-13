@@ -39,24 +39,6 @@ public class ChatRequests extends ApiRequest {
         }
     }
 
-//    public static void startChat(Context context, String user1Id, String user2Id, ChatResponseCallback callback) {
-//        String url = ServerConfig.BASE_URL + "/chats/start";
-//        try {
-//            JSONObject json = new JSONObject();
-//            json.put("user1_id", user1Id);
-//            json.put("user2_id", user2Id);
-//
-//            sendRequest(context, url, json.toString(), "POST",
-//                    (success, message, response) -> runOnUiThread(context, () -> {
-//                        Chat chat = success ? Chat.fromJson(response) : null;
-//                        callback.onResponse(success, message, chat);
-//                    }));
-//        } catch (Exception e) {
-//            Log.e(TAG, "Start chat error", e);
-//            callback.onResponse(false, "Start chat request failed.", null);
-//        }
-//    }
-
     public static void startChat(Context context, String chatName, List<String> userIds, int currentUserId, ChatResponseCallback callback) {
         String url = ServerConfig.BASE_URL + "/chats";
         try {
