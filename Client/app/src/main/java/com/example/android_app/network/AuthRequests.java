@@ -18,7 +18,7 @@ public class AuthRequests extends ApiRequest {
                              String email,
                              String password,
                              AuthResponseCallback callback) {
-        String url = ServerConfig.BASE_URL + "/login";
+        String url = ServerConfig.BASE_URL + "/users/login";
         try {
             JSONObject json = User.toJson(email, password, null);
             sendRequest(context, url, json.toString(), "POST",
@@ -37,7 +37,7 @@ public class AuthRequests extends ApiRequest {
                                 String email,
                                 String password,
                                 AuthResponseCallback callback) {
-        String url = ServerConfig.BASE_URL + "/register";
+        String url = ServerConfig.BASE_URL + "/users/register";
         try {
             JSONObject json = User.toJson(email, password, username);
             sendRequest(context, url, json.toString(), "POST",
